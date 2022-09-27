@@ -20,40 +20,48 @@ import com.appbasica.db.DbHelper;
 
 public class SegundaActivity extends AppCompatActivity {
 
-    PendingIntent pendingIntent;
-    private final static String CHANNEL_ID ="Notificacion";
-    private final static int NOTIFICACION_ID = 0 ;
-
+    //variables para mostrar los datos recibidos de la primer activity
     TextView datos;
     public String nombre;
     private String contraseña;
     Bundle variablesRecibidas;
 
 
+    //elementos para la notificacion emergente (extra)
+    PendingIntent pendingIntent;
+    private final static String CHANNEL_ID ="Notificacion";
+    private final static int NOTIFICACION_ID = 0 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_segunda);
         datos = (TextView) findViewById(R.id.txtDatos);
+
+        //crearemos un bundle que contendra los elementos recibidos "Name" y "Pasword"
         variablesRecibidas = getIntent().getExtras();
+
+        //guardaresmos los datos que contiene el bundle creado anteriormente
         nombre = variablesRecibidas.getString("Name");
         contraseña = variablesRecibidas.getString("Pasword");
-
         Toast mensaje;
 
-        //condicionales de la contraseña.
+        //Metodo para la validaciones de la contraseña
         if (contraseña.equals("")) {
             mensaje = Toast.makeText(getApplicationContext(), "Ingrese una contraseña valida", Toast.LENGTH_LONG);
             mensaje.show();
             Regresar();
         } else {
+            //le daremos un texto al textView de la activity
             datos.setText("Bienvenido al sistema " + nombre + "\n Su contraseñ es: " + contraseña);
+
             mensaje = Toast.makeText(getApplicationContext(), "El usuario " + this.nombre + " se a registrado en el sistema", Toast.LENGTH_LONG);
             mensaje.show();
             createNotification();
             crearDatabase();
-            //insertar un usuario a la base de datos
+
         }
+
         if (nombre.equals("")) {
             mensaje = Toast.makeText(getApplicationContext(), "Ingrese un nombre valida", Toast.LENGTH_LONG);
             mensaje.show();
@@ -62,11 +70,13 @@ public class SegundaActivity extends AppCompatActivity {
 
     }
 
+    //metodo del boton regresar
     public void anteriorActividad(View v) {
         Intent Regreso = new Intent(this, PrimerActivity.class);
         startActivity(Regreso);
         finish();
     }
+    //metodo utilizado en la creacion para las exepciones
     public void Regresar() {
         Intent Regreso = new Intent(this, PrimerActivity.class);
         startActivity(Regreso);
@@ -74,9 +84,13 @@ public class SegundaActivity extends AppCompatActivity {
     }
 
 
+
+    //--- extra --- (db, notificacion)
+
+
+
     //creacion de la base de datos interna
     private void crearDatabase(){
-
         DbHelper dbHelper = new DbHelper(SegundaActivity.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("INSERT INTO Usuarios (nombre, contraseña) VALUES ('"+nombre+"', '"+contraseña+"')");
@@ -100,7 +114,6 @@ public class SegundaActivity extends AppCompatActivity {
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setLights(Color.RED, 1000, 1000);
-
         NotificationManagerCompat notificacionMAnagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificacionMAnagerCompat.notify(NOTIFICACION_ID, builder.build());
     }

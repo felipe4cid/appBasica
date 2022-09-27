@@ -1,0 +1,22 @@
+<resources>
+    <!-- Elementos básicos de la creacion -->
+    <string name="app_name">appBasica</string>
+    <string name="title_activity_primer">PrimerActivity</string>
+
+    <!-- Elementos Creados -->
+    <string name="titulo_etiquta_Main">Crear nueva cuenta</string>
+    <string name="titulo_etiquta_1">Ingrese los datos de usuario</string>
+    <string name="titulo_etiquta_2">Bienvenido al sistema</string>
+    <string name="TextoMain">texto de main</string>
+    <string name="TextoFirst">texto del primero</string>
+    <string name="TextoSecond">texto del segndo Arg: %1$s</string>
+    <string name="notificacion">Notificación</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="anterior">Anterior</string>
+
+    <string name="registrarse">Registrarse</string>
+    <string name="etd_name">NOMBRE</string>
+    <string name="etd_pasword">CONTRASEÑA</string>
+
+
+</resources>
